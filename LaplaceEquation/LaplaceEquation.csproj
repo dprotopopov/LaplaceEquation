@@ -71,8 +71,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CudafyLaplaceSolver.cs" />
     <Compile Include="LaplaceSolver.cs" />
-    <Compile Include="SharpLaplaceSolver.cs" />
+    <Compile Include="NativeLaplaceSolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

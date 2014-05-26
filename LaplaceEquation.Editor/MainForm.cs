@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using Int32 = MyLibrary.Types.Int32;
 
 namespace LaplaceEquation.Editor
 {
     public partial class MainForm : Form
     {
-        private readonly ExecuteSolverDailog _executeSolverDailog = new ExecuteSolverDailog();
-        private readonly OptimizerForm _optimizer = new OptimizerForm();
+        private readonly ExecuteSolverDialog _executeSolverDialog = new ExecuteSolverDialog();
+        private readonly RandomDialog _randomDailog = new RandomDialog();
 
         public MainForm()
         {
@@ -20,7 +22,7 @@ namespace LaplaceEquation.Editor
         {
             var dialog = new CreateMatrixDialog();
             if (dialog.ShowDialog() != DialogResult.OK) return;
-            var child = new MatrixForm(dialog.Sizes, dialog.Lenghts, dialog.Data)
+            var child = new MatrixForm(dialog.Sizes, dialog.Lengths, dialog.Data)
             {
                 MdiParent = this
             };
@@ -50,12 +52,21 @@ namespace LaplaceEquation.Editor
             var child = ActiveMdiChild as MatrixForm;
             if (child == null) return;
             if (!(child is MatrixForm)) return;
-            if (_executeSolverDailog.ShowDialog() != DialogResult.OK) return;
+            if (_executeSolverDialog.ShowDialog() != DialogResult.OK) return;
             LaplaceSolver solver;
-            if (_executeSolverDailog.NativeMethod)
-                solver = new SharpLaplaceSolver();
-            else if (_executeSolverDailog.CudafyMethod)
-                solver = new CudafyLaplaceSolver();
+            if (_executeSolverDialog.NativeMethod)
+                solver = new NativeLaplaceSolver
+                {
+                    AppendLineCallback = child.AppendLineCallback,
+                };
+            else if (_executeSolverDialog.CudafyMethod)
+                solver = new CudafyLaplaceSolver
+                {
+                    AppendLineCallback = child.AppendLineCallback,
+                    GridSize = _executeSolverDialog.GridSize,
+                    BlockSize = _executeSolverDialog.BlockSize,
+                };
+
             else
             {
                 MessageBox.Show("Не выбран метод");
@@ -63,12 +74,45 @@ namespace LaplaceEquation.Editor
             }
             int[] sizes = child.Sizes.ToArray();
             double[] lengths = child.Lengths.ToArray();
-            double[] src = child.Data.ToArray();
+            double[] src = child.SrcData.ToArray();
             var dest = new double[sizes.Aggregate(Int32.Mul)];
-            double a = _executeSolverDailog.AlgorithmParameter;
-            double epsilon = _executeSolverDailog.Epsilon;
-            solver.Solve(sizes, lengths, src, dest, epsilon, a);
-            child.Data = new BindingList<double>(dest);
+            double a = _executeSolverDialog.AlgorithmParameter;
+            double epsilon = _executeSolverDialog.Epsilon;
+            DateTime startDateTime = DateTime.Now;
+            IEnumerable<double> queue = solver.Solve(sizes, lengths, src, dest, epsilon, a);
+            DateTime endDateTime = DateTime.Now;
+            child.DestData = new BindingList<double>(dest);
+
+            var timeSpan = new TimeSpan(endDateTime.Ticks - startDateTime.Ticks);
+
+            double srcE = src.Average();
+            double srcS2 = src.Select(x => x*x).Average() - srcE*srcE;
+            double destE = dest.Average();
+            double destS2 = dest.Select(x => x*x).Average() - destE*destE;
+            var experiment = new Experiment
+            {
+                LaplaceMethod = _executeSolverDialog.LaplaceMethod,
+                Rows = sizes[0],
+                Columns = sizes[1],
+                SrcE = srcE,
+                SrcS2 = srcS2,
+                DestE = destE,
+                DestS2 = destS2,
+                StartDateTime = startDateTime,
+                EndDateTime = endDateTime,
+                RunTimeSpan = timeSpan,
+                Steps = queue.Count(),
+                AlgorithmParameter = a,
+                Epsilon = epsilon,
+                GridSize = _executeSolverDialog.GridSize,
+                BlockSize = _executeSolverDialog.BlockSize,
+            };
+            child.Experiments.Add(experiment);
+            child.chart1.DataBindTable(queue);
+            child.chart1.Series.Last().Name = experiment.ToString();
+            child.chart1.ChartAreas.Last().AxisY.IsLogarithmic = true;
+            child.chart1.Series.Last().ChartType = SeriesChartType.FastPoint;
+            MessageBox.Show(timeSpan.ToString());
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -78,7 +122,20 @@ namespace LaplaceEquation.Editor
 
         private void optimizerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _optimizer.Show();
+            var optimazer = new OptimazerForm
+            {
+                MdiParent = this
+            };
+            optimazer.Show();
+        }
+
+        private void randomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var child = ActiveMdiChild as MatrixForm;
+            if (child == null) return;
+            if (!(child is MatrixForm)) return;
+            if (_randomDailog.ShowDialog() != DialogResult.OK) return;
+            child.Random(_randomDailog.Minimum, _randomDailog.Maximum);
         }
     }
 }

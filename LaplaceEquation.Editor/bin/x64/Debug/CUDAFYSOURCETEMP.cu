@@ -4,9 +4,13 @@ extern "C" __global__ void LaplaceSolver( double* prev, int prevLen0,  double* n
 // MyCudafy.CudafyMultiDimentionalArray
 extern "C" __global__ void Copy( double* prev, int prevLen0,  double* next, int nextLen0);
 // MyCudafy.CudafyMultiDimentionalArray
+extern "C" __global__ void Square( double* prev, int prevLen0,  double* next, int nextLen0,  double* delta, int deltaLen0);
+// MyCudafy.CudafyMultiDimentionalArray
 extern "C" __global__ void Delta( double* prev, int prevLen0,  double* next, int nextLen0,  double* delta, int deltaLen0);
 // MyCudafy.CudafyMultiDimentionalArray
 extern "C" __global__ void Max( double* prev, int prevLen0,  double* next, int nextLen0);
+// MyCudafy.CudafyMultiDimentionalArray
+extern "C" __global__ void Sum( double* prev, int prevLen0,  double* next, int nextLen0);
 
 // MyCudafy.CudafyMultiDimentionalArray
 __constant__ double _a[100];
@@ -43,12 +47,12 @@ extern "C" __global__ void LaplaceSolver( double* prev, int prevLen0,  double* n
 			num2 /= sizes[(j)] - 2;
 			j++;
 		}
-		double num3 = 0.0;
+		double num3 = prev[(num)] * w[(sizesLen0)];
 		for (j = 0; j < sizesLen0; j++)
 		{
 			num3 += (prev[(num - extV[(j)])] + prev[(num + extV[(j)])]) * w[(j)];
 		}
-		next[(num)] = num3 - prev[(num)] * w[(sizesLen0)];
+		next[(num)] = num3;
 	}
 }
 // MyCudafy.CudafyMultiDimentionalArray
@@ -60,11 +64,23 @@ extern "C" __global__ void Copy( double* prev, int prevLen0,  double* next, int 
 	}
 }
 // MyCudafy.CudafyMultiDimentionalArray
+extern "C" __global__ void Square( double* prev, int prevLen0,  double* next, int nextLen0,  double* delta, int deltaLen0)
+{
+	for (int i = blockDim.x * blockIdx.x + threadIdx.x; i < prevLen0; i += blockDim.x * gridDim.x)
+	{
+		double num = next[(i)];
+		num *= num;
+		delta[(i)] = num;
+	}
+}
+// MyCudafy.CudafyMultiDimentionalArray
 extern "C" __global__ void Delta( double* prev, int prevLen0,  double* next, int nextLen0,  double* delta, int deltaLen0)
 {
 	for (int i = blockDim.x * blockIdx.x + threadIdx.x; i < prevLen0; i += blockDim.x * gridDim.x)
 	{
-		delta[(i)] = ((next[(i)] > prev[(i)]) ? (next[(i)] - prev[(i)]) : (prev[(i)] - next[(i)]));
+		double num = next[(i)] * (prev[(i)] - next[(i)]);
+		num *= num;
+		delta[(i)] = num;
 	}
 }
 // MyCudafy.CudafyMultiDimentionalArray
@@ -73,14 +89,30 @@ extern "C" __global__ void Max( double* prev, int prevLen0,  double* next, int n
 	for (int i = blockDim.x * blockIdx.x + threadIdx.x; i < nextLen0; i += blockDim.x * gridDim.x)
 	{
 		next[(i)] = 0.0;
-		int num = (prevLen0 + nextLen0 - 1) / nextLen0;
-		while (num-- > 0)
+		int num = 0;
+		while (num * nextLen0 + i < prevLen0)
 		{
 			int num2 = num * nextLen0 + i;
-			if (num2 < prevLen0 && prev[(num2)] > next[(i)])
+			if (prev[(num2)] > next[(i)])
 			{
 				next[(i)] = prev[(num2)];
 			}
+			num++;
+		}
+	}
+}
+// MyCudafy.CudafyMultiDimentionalArray
+extern "C" __global__ void Sum( double* prev, int prevLen0,  double* next, int nextLen0)
+{
+	for (int i = blockDim.x * blockIdx.x + threadIdx.x; i < nextLen0; i += blockDim.x * gridDim.x)
+	{
+		next[(i)] = 0.0;
+		int num = 0;
+		while (num * nextLen0 + i < prevLen0)
+		{
+			int num2 = num * nextLen0 + i;
+			next[(i)] += prev[(num2)];
+			num++;
 		}
 	}
 }

@@ -76,12 +76,15 @@
     <Compile Include="CreateMatrixDialog.Designer.cs">
       <DependentUpon>CreateMatrixDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExecuteSolverDailog.cs">
+    <Compile Include="ExecuteSolverDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExecuteSolverDailog.Designer.cs">
-      <DependentUpon>ExecuteSolverDailog.cs</DependentUpon>
+    <Compile Include="ExecuteSolverDialog.Designer.cs">
+      <DependentUpon>ExecuteSolverDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Experiment.cs" />
+    <Compile Include="KeyValuePairDoubleDoubleComparer.cs" />
+    <Compile Include="LaplaceMethod.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,19 +100,26 @@
     <Compile Include="MatrixIO.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="OptimizerForm.cs">
+    <Compile Include="OptimalValuesComparer.cs" />
+    <Compile Include="OptimazerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OptimizerForm.Designer.cs">
-      <DependentUpon>OptimizerForm.cs</DependentUpon>
+    <Compile Include="OptimazerForm.Designer.cs">
+      <DependentUpon>OptimazerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RandomDialog.Designer.cs">
+      <DependentUpon>RandomDialog.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CreateMatrixDialog.resx">
       <DependentUpon>CreateMatrixDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExecuteSolverDailog.resx">
-      <DependentUpon>ExecuteSolverDailog.cs</DependentUpon>
+    <EmbeddedResource Include="ExecuteSolverDialog.resx">
+      <DependentUpon>ExecuteSolverDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -117,8 +127,8 @@
     <EmbeddedResource Include="MatrixForm.resx">
       <DependentUpon>MatrixForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OptimizerForm.resx">
-      <DependentUpon>OptimizerForm.cs</DependentUpon>
+    <EmbeddedResource Include="OptimazerForm.resx">
+      <DependentUpon>OptimazerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -129,6 +139,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RandomDialog.resx">
+      <DependentUpon>RandomDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

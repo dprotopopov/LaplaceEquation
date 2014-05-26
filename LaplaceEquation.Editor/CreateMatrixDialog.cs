@@ -26,7 +26,7 @@ namespace LaplaceEquation.Editor
             }
         }
 
-        public IEnumerable<double> Lenghts
+        public IEnumerable<double> Lengths
         {
             get
             {
