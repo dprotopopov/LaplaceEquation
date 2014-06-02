@@ -4,14 +4,22 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using MiniMax.Forms;
+using MyFormula;
 using Int32 = MyLibrary.Types.Int32;
 
 namespace LaplaceEquation.Editor
 {
     public partial class MainForm : Form
     {
-        private readonly ExecuteSolverDialog _executeSolverDialog = new ExecuteSolverDialog();
-        private readonly RandomDialog _randomDailog = new RandomDialog();
+        private static readonly BuildChooseDialog CudaBuildChooseDialog =
+            new BuildChooseDialog(typeof(MyCudaFormula));
+
+        private static readonly ExecuteSolverDialog ExecuteSolverDialog = new ExecuteSolverDialog()
+        {
+            CudaBuildChooseDialog = CudaBuildChooseDialog
+        };
+        private static readonly RandomDialog RandomDailog = new RandomDialog();
 
         public MainForm()
         {
@@ -52,19 +60,19 @@ namespace LaplaceEquation.Editor
             var child = ActiveMdiChild as MatrixForm;
             if (child == null) return;
             if (!(child is MatrixForm)) return;
-            if (_executeSolverDialog.ShowDialog() != DialogResult.OK) return;
+            if (ExecuteSolverDialog.ShowDialog() != DialogResult.OK) return;
             LaplaceSolver solver;
-            if (_executeSolverDialog.NativeMethod)
+            if (ExecuteSolverDialog.NativeMethod)
                 solver = new NativeLaplaceSolver
                 {
                     AppendLineCallback = child.AppendLineCallback,
                 };
-            else if (_executeSolverDialog.CudafyMethod)
+            else if (ExecuteSolverDialog.CudafyMethod)
                 solver = new CudafyLaplaceSolver
                 {
                     AppendLineCallback = child.AppendLineCallback,
-                    GridSize = _executeSolverDialog.GridSize,
-                    BlockSize = _executeSolverDialog.BlockSize,
+                    GridSize = ExecuteSolverDialog.GridSize,
+                    BlockSize = ExecuteSolverDialog.BlockSize,
                 };
 
             else
@@ -76,8 +84,8 @@ namespace LaplaceEquation.Editor
             double[] lengths = child.Lengths.ToArray();
             double[] src = child.SrcData.ToArray();
             var dest = new double[sizes.Aggregate(Int32.Mul)];
-            double a = _executeSolverDialog.AlgorithmParameter;
-            double epsilon = _executeSolverDialog.Epsilon;
+            double a = ExecuteSolverDialog.AlgorithmParameter;
+            double epsilon = ExecuteSolverDialog.Epsilon;
             DateTime startDateTime = DateTime.Now;
             IEnumerable<double> queue = solver.Solve(sizes, lengths, src, dest, epsilon, a);
             DateTime endDateTime = DateTime.Now;
@@ -91,7 +99,7 @@ namespace LaplaceEquation.Editor
             double destS2 = dest.Select(x => x*x).Average() - destE*destE;
             var experiment = new Experiment
             {
-                LaplaceMethod = _executeSolverDialog.LaplaceMethod,
+                LaplaceMethod = ExecuteSolverDialog.LaplaceMethod,
                 Rows = sizes[0],
                 Columns = sizes[1],
                 SrcE = srcE,
@@ -104,8 +112,8 @@ namespace LaplaceEquation.Editor
                 Steps = queue.Count(),
                 AlgorithmParameter = a,
                 Epsilon = epsilon,
-                GridSize = _executeSolverDialog.GridSize,
-                BlockSize = _executeSolverDialog.BlockSize,
+                GridSize = ExecuteSolverDialog.GridSize,
+                BlockSize = ExecuteSolverDialog.BlockSize,
             };
             child.Experiments.Add(experiment);
             child.chart1.DataBindTable(queue);
@@ -134,8 +142,8 @@ namespace LaplaceEquation.Editor
             var child = ActiveMdiChild as MatrixForm;
             if (child == null) return;
             if (!(child is MatrixForm)) return;
-            if (_randomDailog.ShowDialog() != DialogResult.OK) return;
-            child.Random(_randomDailog.Minimum, _randomDailog.Maximum);
+            if (RandomDailog.ShowDialog() != DialogResult.OK) return;
+            child.Random(RandomDailog.Minimum, RandomDailog.Maximum);
         }
     }
 }

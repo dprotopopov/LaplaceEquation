@@ -157,7 +157,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MyLibrary\MyCudafy\MyCudafy.csproj">
+    <ProjectReference Include="..\..\MiniMax\MiniMax\MiniMax.csproj">
+      <Project>{0ece0fc2-deb3-4f20-a2b8-64d0302387e7}</Project>
+      <Name>MiniMax</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MiniMax\MyFormula\MyFormula.csproj">
+      <Project>{8b47c010-66f9-4cfd-9489-2bff415edc39}</Project>
+      <Name>MyFormula</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MyCudafyLibrary\MyCudafy\MyCudafy.csproj">
       <Project>{325a76ab-5185-432d-be58-8c6dda03c458}</Project>
       <Name>MyCudafy</Name>
     </ProjectReference>

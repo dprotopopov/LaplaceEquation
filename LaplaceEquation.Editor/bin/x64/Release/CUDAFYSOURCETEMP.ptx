@@ -1,0 +1,540 @@
+	.version 1.4
+	.target sm_13
+	// compiled with C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin/../open64/lib//be.exe
+	// nvopencc 4.1 built on 2013-07-10
+
+	//-----------------------------------------------------------
+	// Compiling X:/Temp/tmpxft_00000e4c_00000000-15_CUDAFYSOURCETEMP.cpp3.i (X:/Temp/ccBI#.a07912)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:sm_13, Endian:little, Pointer Size:64
+	//  -O3	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"X:/Temp/tmpxft_00000e4c_00000000-14_CUDAFYSOURCETEMP.cudafe2.gpu"
+	.file	2	"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin/../../VC/INCLUDE\crtdefs.h"
+	.file	3	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\crt/device_runtime.h"
+	.file	4	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\host_defines.h"
+	.file	5	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\builtin_types.h"
+	.file	6	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\device_types.h"
+	.file	7	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\host_defines.h"
+	.file	8	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\driver_types.h"
+	.file	9	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_types.h"
+	.file	10	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_types.h"
+	.file	11	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\vector_types.h"
+	.file	12	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\builtin_types.h"
+	.file	13	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\device_launch_parameters.h"
+	.file	14	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\crt\storage_class.h"
+	.file	15	"D:/Projects/LaplaceEquation/LaplaceEquation.Editor/bin/x64/Release/CUDAFYSOURCETEMP.cu"
+	.file	16	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\common_functions.h"
+	.file	17	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_functions.h"
+	.file	18	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_constants.h"
+	.file	19	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\device_functions.h"
+	.file	20	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_11_atomic_functions.h"
+	.file	21	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_12_atomic_functions.h"
+	.file	22	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_13_double_functions.h"
+	.file	23	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_20_atomic_functions.h"
+	.file	24	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_32_atomic_functions.h"
+	.file	25	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_35_atomic_functions.h"
+	.file	26	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_20_intrinsics.h"
+	.file	27	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_30_intrinsics.h"
+	.file	28	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_32_intrinsics.h"
+	.file	29	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_35_intrinsics.h"
+	.file	30	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_functions.h"
+	.file	31	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_fetch_functions.h"
+	.file	32	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_indirect_functions.h"
+	.file	33	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_indirect_functions.h"
+	.file	34	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_functions_dbl_ptx3.h"
+
+
+	.entry LaplaceSolver (
+		.param .u64 __cudaparm_LaplaceSolver_prev,
+		.param .s32 __cudaparm_LaplaceSolver_prevLen0,
+		.param .u64 __cudaparm_LaplaceSolver_next,
+		.param .s32 __cudaparm_LaplaceSolver_nextLen0,
+		.param .u64 __cudaparm_LaplaceSolver_sizes,
+		.param .s32 __cudaparm_LaplaceSolver_sizesLen0,
+		.param .u64 __cudaparm_LaplaceSolver_extV,
+		.param .s32 __cudaparm_LaplaceSolver_extVLen0,
+		.param .u64 __cudaparm_LaplaceSolver_intV,
+		.param .s32 __cudaparm_LaplaceSolver_intVLen0,
+		.param .u64 __cudaparm_LaplaceSolver_w,
+		.param .s32 __cudaparm_LaplaceSolver_wLen0)
+	{
+	.reg .u16 %rh<5>;
+	.reg .u32 %r<29>;
+	.reg .u64 %rd<25>;
+	.reg .f64 %fd<9>;
+	.reg .pred %p<7>;
+	.loc	15	37	0
+$LDWbegin_LaplaceSolver:
+	.loc	15	39	0
+	mov.u16 	%rh1, %ntid.x;
+	mov.u16 	%rh2, %ctaid.x;
+	mul.wide.u16 	%r1, %rh2, %rh1;
+	cvt.u32.u16 	%r2, %tid.x;
+	add.u32 	%r3, %r2, %r1;
+	mov.s32 	%r4, %r3;
+	ld.param.s32 	%r5, [__cudaparm_LaplaceSolver_sizesLen0];
+	cvt.s64.s32 	%rd1, %r5;
+	ld.param.u64 	%rd2, [__cudaparm_LaplaceSolver_intV];
+	mul.wide.s32 	%rd3, %r5, 4;
+	add.u64 	%rd4, %rd2, %rd3;
+	ld.global.s32 	%r6, [%rd4+0];
+	setp.le.s32 	%p1, %r6, %r3;
+	@%p1 bra 	$Lt_0_3330;
+	cvt.s32.s64 	%r7, %rd1;
+	mov.u16 	%rh3, %nctaid.x;
+	mul.wide.u16 	%r8, %rh3, %rh1;
+	mov.s32 	%r9, 0;
+	setp.gt.s32 	%p2, %r7, %r9;
+	ld.param.u64 	%rd5, [__cudaparm_LaplaceSolver_w];
+	mul.lo.u64 	%rd6, %rd1, 8;
+	add.u64 	%rd7, %rd5, %rd6;
+	ld.param.u64 	%rd8, [__cudaparm_LaplaceSolver_next];
+	ld.param.u64 	%rd9, [__cudaparm_LaplaceSolver_prev];
+$Lt_0_3842:
+	.loc	15	43	0
+	mov.s32 	%r10, %r4;
+	@!%p2 bra 	$Lt_0_6658;
+	mov.s32 	%r11, %r7;
+	ld.param.u64 	%rd10, [__cudaparm_LaplaceSolver_extV];
+	ld.param.u64 	%rd11, [__cudaparm_LaplaceSolver_sizes];
+	mov.s32 	%r12, 0;
+	mov.s32 	%r13, 0;
+	mov.s32 	%r14, %r11;
+$Lt_0_4610:
+ //<loop> Loop body line 43, nesting depth: 1, estimated iterations: unknown
+	.loc	15	46	0
+	ld.global.s32 	%r15, [%rd11+0];
+	sub.s32 	%r16, %r15, 2;
+	ld.global.s32 	%r17, [%rd10+0];
+	rem.s32 	%r18, %r10, %r16;
+	add.s32 	%r19, %r18, 1;
+	mul.lo.s32 	%r20, %r17, %r19;
+	add.s32 	%r13, %r13, %r20;
+	.loc	15	47	0
+	div.s32 	%r10, %r10, %r16;
+	add.s32 	%r12, %r12, 1;
+	add.u64 	%rd11, %rd11, 4;
+	add.u64 	%rd10, %rd10, 4;
+	setp.ne.s32 	%p3, %r7, %r12;
+	@%p3 bra 	$Lt_0_4610;
+	bra.uni 	$Lt_0_4098;
+$Lt_0_6658:
+	mov.s32 	%r13, 0;
+$Lt_0_4098:
+	.loc	15	50	0
+	cvt.s64.s32 	%rd12, %r13;
+	mul.wide.s32 	%rd13, %r13, 8;
+	ld.global.f64 	%fd1, [%rd7+0];
+	.loc	15	39	0
+	ld.param.u64 	%rd9, [__cudaparm_LaplaceSolver_prev];
+	.loc	15	50	0
+	add.u64 	%rd14, %rd13, %rd9;
+	ld.global.f64 	%fd2, [%rd14+0];
+	mul.f64 	%fd3, %fd1, %fd2;
+	@!%p2 bra 	$Lt_0_5122;
+	mov.s32 	%r21, %r7;
+	.loc	15	39	0
+	ld.param.u64 	%rd5, [__cudaparm_LaplaceSolver_w];
+	.loc	15	50	0
+	mov.s64 	%rd15, %rd5;
+	ld.param.u64 	%rd16, [__cudaparm_LaplaceSolver_extV];
+	mov.s32 	%r22, 0;
+	mov.s32 	%r23, %r21;
+$Lt_0_5634:
+ //<loop> Loop body line 50, nesting depth: 1, estimated iterations: unknown
+	.loc	15	53	0
+	ld.global.s32 	%r24, [%rd16+0];
+	ld.global.f64 	%fd4, [%rd15+0];
+	add.s32 	%r25, %r24, %r13;
+	cvt.s64.s32 	%rd17, %r25;
+	mul.wide.s32 	%rd18, %r25, 8;
+	.loc	15	39	0
+	ld.param.u64 	%rd9, [__cudaparm_LaplaceSolver_prev];
+	.loc	15	53	0
+	add.u64 	%rd19, %rd9, %rd18;
+	ld.global.f64 	%fd5, [%rd19+0];
+	sub.s32 	%r26, %r13, %r24;
+	cvt.s64.s32 	%rd20, %r26;
+	mul.wide.s32 	%rd21, %r26, 8;
+	add.u64 	%rd22, %rd9, %rd21;
+	ld.global.f64 	%fd6, [%rd22+0];
+	add.f64 	%fd7, %fd5, %fd6;
+	mad.rn.f64 	%fd3, %fd4, %fd7, %fd3;
+	add.s32 	%r22, %r22, 1;
+	add.u64 	%rd16, %rd16, 4;
+	add.u64 	%rd15, %rd15, 8;
+	setp.ne.s32 	%p4, %r7, %r22;
+	@%p4 bra 	$Lt_0_5634;
+$Lt_0_5122:
+	.loc	15	39	0
+	ld.param.u64 	%rd8, [__cudaparm_LaplaceSolver_next];
+	.loc	15	55	0
+	add.u64 	%rd23, %rd13, %rd8;
+	st.global.f64 	[%rd23+0], %fd3;
+	.loc	15	39	0
+	add.u32 	%r4, %r4, %r8;
+	ld.global.s32 	%r27, [%rd4+0];
+	setp.gt.s32 	%p5, %r27, %r4;
+	@%p5 bra 	$Lt_0_3842;
+$Lt_0_3330:
+	.loc	15	57	0
+	exit;
+$LDWend_LaplaceSolver:
+	} // LaplaceSolver
+
+	.entry Copy (
+		.param .u64 __cudaparm_Copy_prev,
+		.param .s32 __cudaparm_Copy_prevLen0,
+		.param .u64 __cudaparm_Copy_next,
+		.param .s32 __cudaparm_Copy_nextLen0)
+	{
+	.reg .u16 %rh<5>;
+	.reg .u32 %r<8>;
+	.reg .u64 %rd<10>;
+	.reg .f64 %fd<3>;
+	.reg .pred %p<4>;
+	.loc	15	59	0
+$LDWbegin_Copy:
+	.loc	15	61	0
+	mov.u16 	%rh1, %ntid.x;
+	mov.u16 	%rh2, %ctaid.x;
+	mul.wide.u16 	%r1, %rh2, %rh1;
+	cvt.u32.u16 	%r2, %tid.x;
+	add.u32 	%r3, %r2, %r1;
+	mov.s32 	%r4, %r3;
+	ld.param.s32 	%r5, [__cudaparm_Copy_prevLen0];
+	setp.le.s32 	%p1, %r5, %r3;
+	@%p1 bra 	$Lt_1_1282;
+	mov.u16 	%rh3, %nctaid.x;
+	mul.wide.u16 	%r6, %rh3, %rh1;
+	cvt.s64.s32 	%rd1, %r3;
+	mul.wide.s32 	%rd2, %r3, 8;
+	cvt.s64.u32 	%rd3, %r6;
+	ld.param.u64 	%rd4, [__cudaparm_Copy_prev];
+	add.u64 	%rd5, %rd4, %rd2;
+	mul.wide.u32 	%rd6, %r6, 8;
+	ld.param.u64 	%rd7, [__cudaparm_Copy_next];
+	add.u64 	%rd8, %rd7, %rd2;
+$Lt_1_1794:
+ //<loop> Loop body line 61, nesting depth: 1, estimated iterations: unknown
+	.loc	15	63	0
+	ld.global.f64 	%fd1, [%rd5+0];
+	st.global.f64 	[%rd8+0], %fd1;
+	add.u32 	%r4, %r4, %r6;
+	add.u64 	%rd8, %rd8, %rd6;
+	add.u64 	%rd5, %rd5, %rd6;
+	.loc	15	61	0
+	ld.param.s32 	%r5, [__cudaparm_Copy_prevLen0];
+	.loc	15	63	0
+	setp.lt.s32 	%p2, %r4, %r5;
+	@%p2 bra 	$Lt_1_1794;
+$Lt_1_1282:
+	.loc	15	65	0
+	exit;
+$LDWend_Copy:
+	} // Copy
+
+	.entry Square (
+		.param .u64 __cudaparm_Square_prev,
+		.param .s32 __cudaparm_Square_prevLen0,
+		.param .u64 __cudaparm_Square_next,
+		.param .s32 __cudaparm_Square_nextLen0,
+		.param .u64 __cudaparm_Square_delta,
+		.param .s32 __cudaparm_Square_deltaLen0)
+	{
+	.reg .u16 %rh<5>;
+	.reg .u32 %r<8>;
+	.reg .u64 %rd<10>;
+	.reg .f64 %fd<4>;
+	.reg .pred %p<4>;
+	.loc	15	67	0
+$LDWbegin_Square:
+	.loc	15	69	0
+	mov.u16 	%rh1, %ntid.x;
+	mov.u16 	%rh2, %ctaid.x;
+	mul.wide.u16 	%r1, %rh2, %rh1;
+	cvt.u32.u16 	%r2, %tid.x;
+	add.u32 	%r3, %r2, %r1;
+	mov.s32 	%r4, %r3;
+	ld.param.s32 	%r5, [__cudaparm_Square_prevLen0];
+	setp.le.s32 	%p1, %r5, %r3;
+	@%p1 bra 	$Lt_2_1282;
+	mov.u16 	%rh3, %nctaid.x;
+	mul.wide.u16 	%r6, %rh3, %rh1;
+	cvt.s64.s32 	%rd1, %r3;
+	mul.wide.s32 	%rd2, %r3, 8;
+	cvt.s64.u32 	%rd3, %r6;
+	ld.param.u64 	%rd4, [__cudaparm_Square_next];
+	add.u64 	%rd5, %rd4, %rd2;
+	mul.wide.u32 	%rd6, %r6, 8;
+	ld.param.u64 	%rd7, [__cudaparm_Square_delta];
+	add.u64 	%rd8, %rd7, %rd2;
+$Lt_2_1794:
+ //<loop> Loop body line 69, nesting depth: 1, estimated iterations: unknown
+	.loc	15	71	0
+	ld.global.f64 	%fd1, [%rd5+0];
+	.loc	15	73	0
+	mul.f64 	%fd2, %fd1, %fd1;
+	st.global.f64 	[%rd8+0], %fd2;
+	add.u32 	%r4, %r4, %r6;
+	add.u64 	%rd8, %rd8, %rd6;
+	add.u64 	%rd5, %rd5, %rd6;
+	.loc	15	69	0
+	ld.param.s32 	%r5, [__cudaparm_Square_prevLen0];
+	.loc	15	73	0
+	setp.lt.s32 	%p2, %r4, %r5;
+	@%p2 bra 	$Lt_2_1794;
+$Lt_2_1282:
+	.loc	15	75	0
+	exit;
+$LDWend_Square:
+	} // Square
+
+	.entry Delta (
+		.param .u64 __cudaparm_Delta_prev,
+		.param .s32 __cudaparm_Delta_prevLen0,
+		.param .u64 __cudaparm_Delta_next,
+		.param .s32 __cudaparm_Delta_nextLen0,
+		.param .u64 __cudaparm_Delta_delta,
+		.param .s32 __cudaparm_Delta_deltaLen0)
+	{
+	.reg .u16 %rh<5>;
+	.reg .u32 %r<8>;
+	.reg .u64 %rd<12>;
+	.reg .f64 %fd<7>;
+	.reg .pred %p<4>;
+	.loc	15	77	0
+$LDWbegin_Delta:
+	.loc	15	79	0
+	mov.u16 	%rh1, %ntid.x;
+	mov.u16 	%rh2, %ctaid.x;
+	mul.wide.u16 	%r1, %rh2, %rh1;
+	cvt.u32.u16 	%r2, %tid.x;
+	add.u32 	%r3, %r2, %r1;
+	mov.s32 	%r4, %r3;
+	ld.param.s32 	%r5, [__cudaparm_Delta_prevLen0];
+	setp.le.s32 	%p1, %r5, %r3;
+	@%p1 bra 	$Lt_3_1282;
+	mov.u16 	%rh3, %nctaid.x;
+	mul.wide.u16 	%r6, %rh3, %rh1;
+	cvt.s64.s32 	%rd1, %r3;
+	mul.wide.s32 	%rd2, %r3, 8;
+	cvt.s64.u32 	%rd3, %r6;
+	ld.param.u64 	%rd4, [__cudaparm_Delta_next];
+	add.u64 	%rd5, %rd4, %rd2;
+	mul.wide.u32 	%rd6, %r6, 8;
+	ld.param.u64 	%rd7, [__cudaparm_Delta_prev];
+	add.u64 	%rd8, %rd7, %rd2;
+	ld.param.u64 	%rd9, [__cudaparm_Delta_delta];
+	add.u64 	%rd10, %rd9, %rd2;
+$Lt_3_1794:
+ //<loop> Loop body line 79, nesting depth: 1, estimated iterations: unknown
+	.loc	15	81	0
+	ld.global.f64 	%fd1, [%rd5+0];
+	ld.global.f64 	%fd2, [%rd8+0];
+	sub.f64 	%fd3, %fd2, %fd1;
+	mul.f64 	%fd4, %fd1, %fd3;
+	.loc	15	83	0
+	mul.f64 	%fd5, %fd4, %fd4;
+	st.global.f64 	[%rd10+0], %fd5;
+	add.u32 	%r4, %r4, %r6;
+	add.u64 	%rd10, %rd10, %rd6;
+	add.u64 	%rd8, %rd8, %rd6;
+	add.u64 	%rd5, %rd5, %rd6;
+	.loc	15	79	0
+	ld.param.s32 	%r5, [__cudaparm_Delta_prevLen0];
+	.loc	15	83	0
+	setp.lt.s32 	%p2, %r4, %r5;
+	@%p2 bra 	$Lt_3_1794;
+$Lt_3_1282:
+	.loc	15	85	0
+	exit;
+$LDWend_Delta:
+	} // Delta
+
+	.entry Max (
+		.param .u64 __cudaparm_Max_prev,
+		.param .s32 __cudaparm_Max_prevLen0,
+		.param .u64 __cudaparm_Max_next,
+		.param .s32 __cudaparm_Max_nextLen0)
+	{
+	.reg .u16 %rh<5>;
+	.reg .u32 %r<10>;
+	.reg .u64 %rd<14>;
+	.reg .f64 %fd<5>;
+	.reg .pred %p<7>;
+	.loc	15	87	0
+$LDWbegin_Max:
+	.loc	15	89	0
+	mov.u16 	%rh1, %ntid.x;
+	mov.u16 	%rh2, %ctaid.x;
+	mul.wide.u16 	%r1, %rh2, %rh1;
+	cvt.u32.u16 	%r2, %tid.x;
+	add.u32 	%r3, %r2, %r1;
+	mov.s32 	%r4, %r3;
+	ld.param.s32 	%r5, [__cudaparm_Max_nextLen0];
+	setp.le.s32 	%p1, %r5, %r3;
+	@%p1 bra 	$Lt_4_3074;
+	cvt.s64.s32 	%rd1, %r3;
+	mov.s64 	%rd2, %rd1;
+	mov.u16 	%rh3, %nctaid.x;
+	mul.wide.u16 	%r6, %rh3, %rh1;
+	cvt.s64.u32 	%rd3, %r6;
+	ld.param.u64 	%rd4, [__cudaparm_Max_next];
+	mul.wide.s32 	%rd5, %r3, 8;
+	add.u64 	%rd6, %rd4, %rd5;
+	mul.wide.u32 	%rd7, %r6, 8;
+	ld.param.s32 	%r7, [__cudaparm_Max_prevLen0];
+$Lt_4_3586:
+ //<loop> Loop body line 89, nesting depth: 1, estimated iterations: unknown
+	.loc	15	91	0
+	mov.f64 	%fd1, 0d0000000000000000;	// 0
+	mov.f64 	%fd2, 0d0000000000000000;	// 0
+	st.global.f64 	[%rd6+0], %fd2;
+	.loc	15	89	0
+	ld.param.s32 	%r7, [__cudaparm_Max_prevLen0];
+	.loc	15	91	0
+	setp.ge.s32 	%p2, %r4, %r7;
+	@%p2 bra 	$Lt_4_3842;
+	mov.s32 	%r8, %r4;
+	.loc	15	89	0
+	ld.param.s32 	%r5, [__cudaparm_Max_nextLen0];
+	.loc	15	91	0
+	cvt.s64.s32 	%rd8, %r5;
+	mul.wide.s32 	%rd9, %r5, 8;
+	ld.param.u64 	%rd10, [__cudaparm_Max_prev];
+	mul.lo.u64 	%rd11, %rd2, 8;
+	add.u64 	%rd12, %rd10, %rd11;
+$Lt_4_4354:
+ //<loop> Loop body line 91, nesting depth: 2, estimated iterations: unknown
+	ld.global.f64 	%fd3, [%rd12+0];
+	setp.lt.f64 	%p3, %fd1, %fd3;
+	@!%p3 bra 	$Lt_4_4610;
+	.loc	15	98	0
+	mov.f64 	%fd1, %fd3;
+	st.global.f64 	[%rd6+0], %fd3;
+$Lt_4_4610:
+	.loc	15	89	0
+	ld.param.s32 	%r5, [__cudaparm_Max_nextLen0];
+	.loc	15	98	0
+	add.s32 	%r8, %r8, %r5;
+	add.u64 	%rd12, %rd9, %rd12;
+	.loc	15	89	0
+	ld.param.s32 	%r7, [__cudaparm_Max_prevLen0];
+	.loc	15	98	0
+	setp.lt.s32 	%p4, %r8, %r7;
+	@%p4 bra 	$Lt_4_4354;
+$Lt_4_3842:
+	add.u32 	%r4, %r4, %r6;
+	add.s64 	%rd2, %rd2, %rd3;
+	add.u64 	%rd6, %rd6, %rd7;
+	.loc	15	89	0
+	ld.param.s32 	%r5, [__cudaparm_Max_nextLen0];
+	.loc	15	98	0
+	setp.lt.s32 	%p5, %r4, %r5;
+	@%p5 bra 	$Lt_4_3586;
+$Lt_4_3074:
+	.loc	15	103	0
+	exit;
+$LDWend_Max:
+	} // Max
+
+	.entry Sum (
+		.param .u64 __cudaparm_Sum_prev,
+		.param .s32 __cudaparm_Sum_prevLen0,
+		.param .u64 __cudaparm_Sum_next,
+		.param .s32 __cudaparm_Sum_nextLen0)
+	{
+	.reg .u16 %rh<5>;
+	.reg .u32 %r<10>;
+	.reg .u64 %rd<14>;
+	.reg .f64 %fd<5>;
+	.reg .pred %p<6>;
+	.loc	15	105	0
+$LDWbegin_Sum:
+	.loc	15	107	0
+	mov.u16 	%rh1, %ntid.x;
+	mov.u16 	%rh2, %ctaid.x;
+	mul.wide.u16 	%r1, %rh2, %rh1;
+	cvt.u32.u16 	%r2, %tid.x;
+	add.u32 	%r3, %r2, %r1;
+	mov.s32 	%r4, %r3;
+	ld.param.s32 	%r5, [__cudaparm_Sum_nextLen0];
+	setp.le.s32 	%p1, %r5, %r3;
+	@%p1 bra 	$Lt_5_2306;
+	cvt.s64.s32 	%rd1, %r3;
+	mov.s64 	%rd2, %rd1;
+	mov.u16 	%rh3, %nctaid.x;
+	mul.wide.u16 	%r6, %rh3, %rh1;
+	cvt.s64.u32 	%rd3, %r6;
+	ld.param.u64 	%rd4, [__cudaparm_Sum_next];
+	mul.wide.s32 	%rd5, %r3, 8;
+	add.u64 	%rd6, %rd4, %rd5;
+	mul.wide.u32 	%rd7, %r6, 8;
+	ld.param.s32 	%r7, [__cudaparm_Sum_prevLen0];
+$Lt_5_2818:
+ //<loop> Loop body line 107, nesting depth: 1, estimated iterations: unknown
+	.loc	15	109	0
+	mov.f64 	%fd1, 0d0000000000000000;	// 0
+	mov.f64 	%fd2, 0d0000000000000000;	// 0
+	st.global.f64 	[%rd6+0], %fd2;
+	.loc	15	107	0
+	ld.param.s32 	%r7, [__cudaparm_Sum_prevLen0];
+	.loc	15	109	0
+	setp.ge.s32 	%p2, %r4, %r7;
+	@%p2 bra 	$Lt_5_3074;
+	mov.s32 	%r8, %r4;
+	.loc	15	107	0
+	ld.param.s32 	%r5, [__cudaparm_Sum_nextLen0];
+	.loc	15	109	0
+	cvt.s64.s32 	%rd8, %r5;
+	mul.wide.s32 	%rd9, %r5, 8;
+	ld.param.u64 	%rd10, [__cudaparm_Sum_prev];
+	mul.lo.u64 	%rd11, %rd2, 8;
+	add.u64 	%rd12, %rd10, %rd11;
+$Lt_5_3586:
+ //<loop> Loop body line 109, nesting depth: 2, estimated iterations: unknown
+	.loc	15	114	0
+	ld.global.f64 	%fd3, [%rd12+0];
+	add.f64 	%fd1, %fd3, %fd1;
+	st.global.f64 	[%rd6+0], %fd1;
+	.loc	15	107	0
+	ld.param.s32 	%r5, [__cudaparm_Sum_nextLen0];
+	.loc	15	114	0
+	add.s32 	%r8, %r8, %r5;
+	add.u64 	%rd12, %rd9, %rd12;
+	.loc	15	107	0
+	ld.param.s32 	%r7, [__cudaparm_Sum_prevLen0];
+	.loc	15	114	0
+	setp.lt.s32 	%p3, %r8, %r7;
+	@%p3 bra 	$Lt_5_3586;
+$Lt_5_3074:
+	add.u32 	%r4, %r4, %r6;
+	add.s64 	%rd2, %rd2, %rd3;
+	add.u64 	%rd6, %rd6, %rd7;
+	.loc	15	107	0
+	ld.param.s32 	%r5, [__cudaparm_Sum_nextLen0];
+	.loc	15	114	0
+	setp.lt.s32 	%p4, %r4, %r5;
+	@%p4 bra 	$Lt_5_2818;
+$Lt_5_2306:
+	.loc	15	118	0
+	exit;
+$LDWend_Sum:
+	} // Sum
+	.const .align 8 .b8 _a[800];
+	.const .align 8 .b8 _lengths[16];
+	.const .align 4 .b8 _intV[12];
+	.const .align 4 .b8 _extV[12];
+	.const .align 8 .b8 _w[24];
+	.const .align 8 .b8 _b[8];
+	.const .align 4 .b8 _sizes[8];
+

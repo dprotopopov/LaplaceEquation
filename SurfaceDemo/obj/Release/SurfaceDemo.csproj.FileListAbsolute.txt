@@ -1,0 +1,16 @@
+D:\Output\NET45\Examples\WPF\SurfaceDemo\SurfaceDemo.exe.config
+D:\Output\NET45\Examples\WPF\SurfaceDemo\SurfaceDemo.exe
+D:\Output\NET45\Examples\WPF\SurfaceDemo\SurfaceDemo.pdb
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\Themes\Theme.baml
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\App.baml
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\Window1.g.cs
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\App.g.cs
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\GeneratedInternalTypeHelper.g.cs
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo_MarkupCompile.cache
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo_MarkupCompile.lref
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\Window1.baml
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo.g.resources
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo.Properties.Resources.resources
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo.csproj.GenerateResource.Cache
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo.exe
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo.pdb

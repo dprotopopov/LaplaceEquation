@@ -44,6 +44,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.numericUpDownEpsilon = new System.Windows.Forms.NumericUpDown();
+            this.button3 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlgorithmParameter)).BeginInit();
             this.groupBox4.SuspendLayout();
@@ -59,7 +60,7 @@
             this.groupBox3.Controls.Add(this.numericUpDownAlgorithmParameter);
             this.groupBox3.Location = new System.Drawing.Point(30, 22);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(507, 176);
+            this.groupBox3.Size = new System.Drawing.Size(648, 165);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Параметр";
@@ -71,14 +72,14 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(469, 98);
+            this.textBox1.Size = new System.Drawing.Size(596, 98);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // numericUpDownAlgorithmParameter
             // 
             this.numericUpDownAlgorithmParameter.DecimalPlaces = 4;
-            this.numericUpDownAlgorithmParameter.Location = new System.Drawing.Point(186, 135);
+            this.numericUpDownAlgorithmParameter.Location = new System.Drawing.Point(261, 125);
             this.numericUpDownAlgorithmParameter.Name = "numericUpDownAlgorithmParameter";
             this.numericUpDownAlgorithmParameter.Size = new System.Drawing.Size(120, 22);
             this.numericUpDownAlgorithmParameter.TabIndex = 0;
@@ -90,6 +91,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.button3);
             this.groupBox4.Controls.Add(this.textBox2);
             this.groupBox4.Controls.Add(this.label2);
             this.groupBox4.Controls.Add(this.label1);
@@ -97,9 +99,9 @@
             this.groupBox4.Controls.Add(this.numericUpDownGridSize);
             this.groupBox4.Controls.Add(this.radioButtonCudafyMethod);
             this.groupBox4.Controls.Add(this.radioButtonNativeMethod);
-            this.groupBox4.Location = new System.Drawing.Point(30, 305);
+            this.groupBox4.Location = new System.Drawing.Point(30, 290);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(507, 87);
+            this.groupBox4.Size = new System.Drawing.Size(648, 87);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Реализация";
@@ -134,7 +136,7 @@
             // 
             this.numericUpDownBlockSize.Location = new System.Drawing.Point(278, 49);
             this.numericUpDownBlockSize.Maximum = new decimal(new int[] {
-            255,
+            1024,
             0,
             0,
             0});
@@ -201,7 +203,7 @@
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(462, 407);
+            this.button1.Location = new System.Drawing.Point(561, 420);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
@@ -211,7 +213,7 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button2.Location = new System.Drawing.Point(381, 407);
+            this.button2.Location = new System.Drawing.Point(480, 420);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 13;
@@ -221,9 +223,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.numericUpDownEpsilon);
-            this.groupBox1.Location = new System.Drawing.Point(30, 218);
+            this.groupBox1.Location = new System.Drawing.Point(30, 205);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(507, 65);
+            this.groupBox1.Size = new System.Drawing.Size(648, 65);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Погрешность";
@@ -231,7 +233,7 @@
             // numericUpDownEpsilon
             // 
             this.numericUpDownEpsilon.DecimalPlaces = 10;
-            this.numericUpDownEpsilon.Location = new System.Drawing.Point(186, 22);
+            this.numericUpDownEpsilon.Location = new System.Drawing.Point(261, 21);
             this.numericUpDownEpsilon.Minimum = new decimal(new int[] {
             1,
             0,
@@ -246,11 +248,21 @@
             0,
             655360});
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(511, 48);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "Опции";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.buttonCudaChoose_Click);
+            // 
             // ExecuteSolverDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(579, 457);
+            this.ClientSize = new System.Drawing.Size(709, 479);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -288,5 +300,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDownBlockSize;
         private System.Windows.Forms.NumericUpDown numericUpDownGridSize;
+        private System.Windows.Forms.Button button3;
     }
 }

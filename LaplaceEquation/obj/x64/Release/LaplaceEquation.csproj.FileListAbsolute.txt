@@ -1,0 +1,14 @@
+D:\Projects\LaplaceEquation\LaplaceEquation\bin\x64\Release\LaplaceEquation.dll.config
+D:\Projects\LaplaceEquation\LaplaceEquation\bin\x64\Release\LaplaceEquation.dll
+D:\Projects\LaplaceEquation\LaplaceEquation\bin\x64\Release\LaplaceEquation.pdb
+D:\Projects\LaplaceEquation\LaplaceEquation\bin\x64\Release\Cudafy.NET.dll
+D:\Projects\LaplaceEquation\LaplaceEquation\bin\x64\Release\MyCudafy.dll
+D:\Projects\LaplaceEquation\LaplaceEquation\bin\x64\Release\MyLibrary.dll
+D:\Projects\LaplaceEquation\LaplaceEquation\bin\x64\Release\MyCudafy.pdb
+D:\Projects\LaplaceEquation\LaplaceEquation\bin\x64\Release\MyLibrary.pdb
+D:\Projects\LaplaceEquation\LaplaceEquation\bin\x64\Release\Cudafy.NET.xml
+D:\Projects\LaplaceEquation\LaplaceEquation\obj\x64\Release\LaplaceEquation.csprojResolveAssemblyReference.cache
+D:\Projects\LaplaceEquation\LaplaceEquation\obj\x64\Release\LaplaceEquation.Properties.Resources.resources
+D:\Projects\LaplaceEquation\LaplaceEquation\obj\x64\Release\LaplaceEquation.csproj.GenerateResource.Cache
+D:\Projects\LaplaceEquation\LaplaceEquation\obj\x64\Release\LaplaceEquation.dll
+D:\Projects\LaplaceEquation\LaplaceEquation\obj\x64\Release\LaplaceEquation.pdb

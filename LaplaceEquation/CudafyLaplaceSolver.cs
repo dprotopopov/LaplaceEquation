@@ -29,12 +29,12 @@ namespace LaplaceEquation
             var queue = new StackListQueue<double>();
             // Копируем исходный массив в рабочую область
             Buffer.BlockCopy(src, 0, workspace, 0, length*sizeof (double));
-            lock (CudafyMultiDimentionalArray.Semaphore)
+            lock (CudafyMulti.Semaphore)
             {
-                CudafyMultiDimentionalArray.SetArray(sizes, lengths, workspace);
-                queue.Enqueue(CudafyMultiDimentionalArray.ExecuteLaplaceSolver(epsilon, a, GridSize, BlockSize,
+                CudafyMulti.SetArray(sizes, lengths, workspace);
+                queue.Enqueue(CudafyMulti.ExecuteLaplaceSolver(epsilon, a, GridSize, BlockSize,
                     AppendLineCallback));
-                workspace = CudafyMultiDimentionalArray.GetArray();
+                workspace = CudafyMulti.GetArray();
             }
             // Копируем рабочую область в итоговый массив
             Buffer.BlockCopy(workspace, 0, dest, 0, length*sizeof (double));
