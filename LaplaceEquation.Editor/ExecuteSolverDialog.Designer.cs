@@ -33,6 +33,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.numericUpDownAlgorithmParameter = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,7 +45,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.numericUpDownEpsilon = new System.Windows.Forms.NumericUpDown();
-            this.button3 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlgorithmParameter)).BeginInit();
             this.groupBox4.SuspendLayout();
@@ -56,11 +57,12 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.checkBox1);
             this.groupBox3.Controls.Add(this.textBox1);
             this.groupBox3.Controls.Add(this.numericUpDownAlgorithmParameter);
             this.groupBox3.Location = new System.Drawing.Point(30, 22);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(648, 165);
+            this.groupBox3.Size = new System.Drawing.Size(648, 192);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Параметр";
@@ -99,12 +101,22 @@
             this.groupBox4.Controls.Add(this.numericUpDownGridSize);
             this.groupBox4.Controls.Add(this.radioButtonCudafyMethod);
             this.groupBox4.Controls.Add(this.radioButtonNativeMethod);
-            this.groupBox4.Location = new System.Drawing.Point(30, 290);
+            this.groupBox4.Location = new System.Drawing.Point(30, 322);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(648, 87);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Реализация";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(511, 48);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "Опции";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.buttonCudaChoose_Click);
             // 
             // textBox2
             // 
@@ -203,7 +215,7 @@
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(561, 420);
+            this.button1.Location = new System.Drawing.Point(571, 459);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
@@ -213,7 +225,7 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button2.Location = new System.Drawing.Point(480, 420);
+            this.button2.Location = new System.Drawing.Point(490, 459);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 13;
@@ -223,7 +235,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.numericUpDownEpsilon);
-            this.groupBox1.Location = new System.Drawing.Point(30, 205);
+            this.groupBox1.Location = new System.Drawing.Point(30, 238);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(648, 65);
             this.groupBox1.TabIndex = 14;
@@ -248,21 +260,21 @@
             0,
             655360});
             // 
-            // button3
+            // checkBox1
             // 
-            this.button3.Location = new System.Drawing.Point(511, 48);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Опции";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.buttonCudaChoose_Click);
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(163, 153);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(327, 21);
+            this.checkBox1.TabIndex = 2;
+            this.checkBox1.Text = "Использовать релаксацию (красное-чёрное)";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // ExecuteSolverDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(709, 479);
+            this.ClientSize = new System.Drawing.Size(709, 547);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -301,5 +313,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownBlockSize;
         private System.Windows.Forms.NumericUpDown numericUpDownGridSize;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

@@ -31,12 +31,17 @@ namespace LaplaceEquation
         /// </summary>
         /// <param name="sizes"></param>
         /// <param name="lengths"></param>
-        /// <param name="src"></param>
-        /// <param name="dest"></param>
-        /// <param name="epsilon"></param>
-        /// <param name="a"></param>
+        /// <param name="src">Исходный массив</param>
+        /// <param name="dest">Итоговый массив</param>
+        /// <param name="epsilon">Точность вычислений</param>
+        /// <param name="a">Параметр алгоритма для вычисления весовых коэффициентов</param>
+        /// <param name="relax">
+        ///     При использовании метода релаксации задействовано в два раза меньше памяти и вычисления производятся
+        ///     на-месте. Для устанения коллизий с совместным доступом производится раскраска точек красное-чёрное для обработки
+        ///     их по-очереди
+        /// </param>
         public abstract IEnumerable<double> Solve(int[] sizes, double[] lengths, double[] src, double[] dest,
-            double epsilon, double a);
+            double epsilon, double a, bool relax);
 
         /// <summary>
         ///     Вычисление определителя матрицы ранга k, у которой на главной диагонали указано число y,
@@ -61,6 +66,10 @@ namespace LaplaceEquation
             return v;
         }
 
+        /// <summary>
+        ///     Вычисление определителя, умноженного на 2^n, матрицы ранга k, у которой на главной диагонали указано число y,
+        ///     а на диагоналях выше и ниже главной диагонали указано число x
+        /// </summary>
         public static double Det2n(double x, double y, int k)
         {
             double z = Math.Sqrt(Math.Abs(y*y - 4*x*x));

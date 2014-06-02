@@ -53,6 +53,9 @@ namespace LaplaceEquation.Editor
         [Value]
         public int GridSize { get; set; }
 
+        [Value]
+        public bool Relax { get; set; }
+
         public Values ToValues()
         {
             return new Values(this);

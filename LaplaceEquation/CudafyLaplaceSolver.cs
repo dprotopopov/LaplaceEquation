@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,7 +15,19 @@ namespace LaplaceEquation
 
         public int BlockSize { get; set; }
 
-        public override IEnumerable<double> Solve(int[] sizes, double[] lengths, double[] src, double[] dest, double epsilon, double a)
+        /// <param name="a">Параметр алгоритма для вычисления весовых коэффициентов</param>
+        /// <param name="relax">
+        ///     При использовании метода релаксации задействовано в два раза меньше памяти и вычисления производятся
+        ///     на-месте. Для устанения коллизий с совместным доступом производится раскраска точек красное-чёрное для обработки
+        ///     их по-очереди
+        /// </param>
+        /// <param name="src">Исходный массив</param>
+        /// <param name="dest">Итоговый массив</param>
+        /// <param name="epsilon">Точность вычислений</param>
+        /// <param name="sizes"></param>
+        /// <param name="lengths"></param>
+        public override IEnumerable<double> Solve(int[] sizes, double[] lengths, double[] src, double[] dest,
+            double epsilon, double a, bool relax)
         {
             Debug.Assert(sizes.Length == lengths.Length);
             Debug.Assert(sizes.Aggregate(Int32.Mul) > 0);
@@ -32,7 +43,7 @@ namespace LaplaceEquation
             lock (CudafyMulti.Semaphore)
             {
                 CudafyMulti.SetArray(sizes, lengths, workspace);
-                queue.Enqueue(CudafyMulti.ExecuteLaplaceSolver(epsilon, a, GridSize, BlockSize,
+                queue.Enqueue(CudafyMulti.ExecuteLaplaceSolver(epsilon, a, relax, GridSize, BlockSize,
                     AppendLineCallback));
                 workspace = CudafyMulti.GetArray();
             }

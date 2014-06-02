@@ -7,11 +7,17 @@ namespace LaplaceEquation.Editor
 {
     public partial class ExecuteSolverDialog : Form
     {
-        public BuildChooseDialog CudaBuildChooseDialog { get; set; }
-
         public ExecuteSolverDialog()
         {
             InitializeComponent();
+        }
+
+        public BuildChooseDialog CudaBuildChooseDialog { get; set; }
+
+        public bool UseRelax
+        {
+            get { return checkBox1.Checked; }
+            set { checkBox1.Checked = value; }
         }
 
         public double AlgorithmParameter
@@ -70,6 +76,7 @@ namespace LaplaceEquation.Editor
             {
             }
         }
+
         private void buttonCudaChoose_Click(object sender, EventArgs e)
         {
             if (CudaBuildChooseDialog.ShowDialog() != DialogResult.OK) return;

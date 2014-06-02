@@ -13,12 +13,13 @@ namespace LaplaceEquation.Editor
     public partial class MainForm : Form
     {
         private static readonly BuildChooseDialog CudaBuildChooseDialog =
-            new BuildChooseDialog(typeof(MyCudaFormula));
+            new BuildChooseDialog(typeof (MyCudaFormula));
 
-        private static readonly ExecuteSolverDialog ExecuteSolverDialog = new ExecuteSolverDialog()
+        private static readonly ExecuteSolverDialog ExecuteSolverDialog = new ExecuteSolverDialog
         {
             CudaBuildChooseDialog = CudaBuildChooseDialog
         };
+
         private static readonly RandomDialog RandomDailog = new RandomDialog();
 
         public MainForm()
@@ -84,10 +85,11 @@ namespace LaplaceEquation.Editor
             double[] lengths = child.Lengths.ToArray();
             double[] src = child.SrcData.ToArray();
             var dest = new double[sizes.Aggregate(Int32.Mul)];
+            bool relax = ExecuteSolverDialog.UseRelax;
             double a = ExecuteSolverDialog.AlgorithmParameter;
             double epsilon = ExecuteSolverDialog.Epsilon;
             DateTime startDateTime = DateTime.Now;
-            IEnumerable<double> queue = solver.Solve(sizes, lengths, src, dest, epsilon, a);
+            IEnumerable<double> queue = solver.Solve(sizes, lengths, src, dest, epsilon, a, relax);
             DateTime endDateTime = DateTime.Now;
             child.DestData = new BindingList<double>(dest);
 
@@ -114,6 +116,7 @@ namespace LaplaceEquation.Editor
                 Epsilon = epsilon,
                 GridSize = ExecuteSolverDialog.GridSize,
                 BlockSize = ExecuteSolverDialog.BlockSize,
+                Relax = relax
             };
             child.Experiments.Add(experiment);
             child.chart1.DataBindTable(queue);

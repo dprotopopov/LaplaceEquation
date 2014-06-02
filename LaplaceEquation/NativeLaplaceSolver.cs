@@ -25,12 +25,17 @@ namespace LaplaceEquation
         /// </summary>
         /// <param name="sizes"></param>
         /// <param name="lengths"></param>
-        /// <param name="src"></param>
-        /// <param name="dest"></param>
-        /// <param name="epsilon"></param>
-        /// <param name="a"></param>
+        /// <param name="src">Исходный массив</param>
+        /// <param name="dest">Итоговый массив</param>
+        /// <param name="epsilon">Точность вычислений</param>
+        /// <param name="a">Параметр алгоритма для вычисления весовых коэффициентов</param>
+        /// <param name="relax">
+        ///     При использовании метода релаксации задействовано в два раза меньше памяти и вычисления производятся
+        ///     на-месте. Для устанения коллизий с совместным доступом производится раскраска точек красное-чёрное для обработки
+        ///     их по-очереди
+        /// </param>
         public override IEnumerable<double> Solve(int[] sizes, double[] lengths, double[] src, double[] dest,
-            double epsilon, double a)
+            double epsilon, double a, bool relax)
         {
             Debug.Assert(sizes.Length == lengths.Length);
             Debug.Assert(sizes.Aggregate(Int32.Mul) > 0);
@@ -59,6 +64,8 @@ namespace LaplaceEquation
             if (AppendLineCallback != null)
                 AppendLineCallback(string.Format("Коэффициент у средней точки:\t{0}", w[sizes.Length]));
 
+            if (AppendLineCallback != null && relax)
+                AppendLineCallback("Используется релаксация");
 
             // Степень дифференциального оператора
             // Реализовано только для оператора Лапласа
@@ -79,19 +86,28 @@ namespace LaplaceEquation
             int extTotal = extV[sizes.Length]; // Количество точек в кубе
             int intTotal = intV[sizes.Length]; // Количество внутренних точек
 
-            double[][] workspace = {new double[extTotal], new double[extTotal]};
+            double[][] workspace = relax
+                ? new[] {new double[extTotal]}
+                : new[] {new double[extTotal], new double[extTotal]};
 
             // Копируем исходный массив в рабочую область
             if (AppendLineCallback != null) AppendLineCallback("Копируем исходный массив в рабочую область");
             Buffer.BlockCopy(src, 0, workspace[0], 0, extTotal*sizeof (double));
-            Buffer.BlockCopy(src, 0, workspace[1], 0, extTotal*sizeof (double));
+            if (!relax) Buffer.BlockCopy(src, 0, workspace[1], 0, extTotal*sizeof (double));
+
+            var read = new object();
+            var write = new object();
 
             var queue = new StackListQueue<double>();
             for (int step = 0;; step++)
             {
                 //if (AppendLineCallback != null) AppendLineCallback(string.Format("Шаг итерации № {0}", step));
-                double[] prev = workspace[step & 1]; // Исходные значения
-                double[] next = workspace[1 - (step & 1)]; // Вычисляемые значения
+
+                //  При использовании метода релаксации задействовано в два раза меньше памяти и вычисления производятся
+                //  на-месте. Для устанения коллизий с совместным доступом производится раскраска точек красное-чёрное для обработки
+                //  их по-очереди
+                double[] prev = relax ? workspace[0] : workspace[step & 1]; // Исходные значения
+                double[] next = relax ? workspace[0] : workspace[1 - (step & 1)]; // Вычисляемые значения
 
                 // Перебор по индексам внутренних точек
                 //if (AppendLineCallback != null) AppendLineCallback("Перебор по индексам внутренних точек");
@@ -101,41 +117,79 @@ namespace LaplaceEquation
                 //if (AppendLineCallback != null)
                 //    AppendLineCallback("Вычисляем среднее взвешенное соседних точек для всех внутренних точек куба");
 
-                Parallel.ForEach(Enumerable.Range(0, intTotal), intId =>
-                {
-                    // Преобразуем индекс внутренней точки в координаты в кубе
-                    // Преобразуем координаты в кубе в индекс точки
-                    int id = 0;
-                    for (int i = 0, v = intId; i < sizes.Length; i++)
-                    {
-                        id += ((rank >> 1) + (v%(sizes[i] - rank)))*extV[i];
-                        v = v/(sizes[i] - rank);
-                    }
-                    // Вычисляем среднее взвешенное соседних точек
-                    // для всех внутренних точек куба
-                    double s = prev[id]*w[sizes.Length];
-                    for (int i = 0; i < sizes.Length; i++)
-                        s += (prev[id - extV[i]] + prev[id + extV[i]])*w[i];
-                    lock (next) next[id] = s;
-                });
-
-                // Рассчитываем амплитуду изменений
-                //if (AppendLineCallback != null) AppendLineCallback("Рассчитываем амплитуду изменений");
-                var delta = new object();
                 double deltaSum = 0;
                 double squareSum = 0;
-                Parallel.ForEach(Enumerable.Range(0, extTotal), i =>
-                {
-                    double x = next[i]*(next[i] - prev[i]);
-                    double y = next[i];
-                    x = x*x;
-                    y = y*y;
-                    lock (delta)
+
+                if (!relax)
+                    Parallel.ForEach(Enumerable.Range(0, intTotal), intId =>
                     {
-                        deltaSum += x;
-                        squareSum += y;
-                    }
-                });
+                        // Преобразуем индекс внутренней точки в координаты в кубе
+                        // Преобразуем координаты в кубе в индекс точки
+                        int id = 0;
+                        for (int i = 0, v = intId; i < sizes.Length; i++)
+                        {
+                            int index = (rank >> 1) + (v%(sizes[i] - rank));
+                            id += index*extV[i];
+                            v = v/(sizes[i] - rank);
+                        }
+
+                        // Вычисляем среднее взвешенное соседних точек
+                        // для всех внутренних точек куба
+                        // и одновременно подсчитываем амплитуду изменений
+                        double x = prev[id];
+                        double y = x*w[sizes.Length];
+                        for (int i = 0; i < sizes.Length; i++)
+                            y += (prev[id - extV[i]] + prev[id + extV[i]])*w[i];
+                        lock (write) next[id] = y;
+                        double delta = x*(x - y);
+                        double square = y;
+                        delta = delta*delta;
+                        square = square*square;
+                        lock (write)
+                        {
+                            deltaSum += delta;
+                            squareSum += square;
+                        }
+                    });
+                else
+                    for (int p = 0; p < 2; p++)
+                        Parallel.ForEach(Enumerable.Range(0, intTotal), intId =>
+                        {
+                            // Преобразуем индекс внутренней точки в координаты в кубе
+                            // Преобразуем координаты в кубе в индекс точки
+                            // и подсчитваем чётность точки
+                            // Чётность точки равна сумме координат
+                            int id = 0;
+                            int parity = 0; // Чётность точки
+                            for (int i = 0, v = intId; i < sizes.Length; i++)
+                            {
+                                int index = (rank >> 1) + (v%(sizes[i] - rank));
+                                parity += index;
+                                id += index*extV[i];
+                                v = v/(sizes[i] - rank);
+                            }
+
+                            if (parity%2 != p) return;
+
+                            // Вычисляем среднее взвешенное соседних точек
+                            // для всех внутренних точек куба
+                            // и одновременно подсчитываем амплитуду изменений
+                            double x = prev[id];
+                            double y = x*w[sizes.Length];
+                            for (int i = 0; i < sizes.Length; i++)
+                                y += (prev[id - extV[i]] + prev[id + extV[i]])*w[i];
+                            lock (write) next[id] = y;
+                            double delta = x*(x - y);
+                            double square = y;
+                            delta = delta*delta;
+                            square = square*square;
+                            lock (write)
+                            {
+                                deltaSum += delta;
+                                squareSum += square;
+                            }
+                        });
+
                 //if (AppendLineCallback != null)
                 //    AppendLineCallback(string.Format("Амплитуда изменений = {0}/{1}", deltaSum, squareSum));
 

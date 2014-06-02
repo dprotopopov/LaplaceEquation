@@ -173,6 +173,10 @@
       <Project>{e80cf993-5e07-4875-85fe-a2adcf76558d}</Project>
       <Name>MyLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MyMathLibrary\MyMath\MyMath.csproj">
+      <Project>{5f759e1e-27bb-4127-ae22-d220f6afbc71}</Project>
+      <Name>MyMath</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LaplaceEquation\LaplaceEquation.csproj">
       <Project>{325e6b54-2c77-4db3-a70a-fa5e20928cb5}</Project>
       <Name>LaplaceEquation</Name>

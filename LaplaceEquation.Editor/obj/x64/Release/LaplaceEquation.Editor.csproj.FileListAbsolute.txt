@@ -3,10 +3,16 @@ D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\LaplaceEquati
 D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\LaplaceEquation.Editor.pdb
 D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\Cudafy.NET.dll
 D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\LaplaceEquation.dll
+D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\MiniMax.dll
 D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\MyCudafy.dll
+D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\MyFormula.dll
 D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\MyLibrary.dll
+D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\MyMath.dll
+D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\MiniMax.pdb
+D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\MyFormula.pdb
 D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\MyCudafy.pdb
 D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\MyLibrary.pdb
+D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\MyMath.pdb
 D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\LaplaceEquation.pdb
 D:\Projects\LaplaceEquation\LaplaceEquation.Editor\bin\x64\Release\Cudafy.NET.xml
 D:\Projects\LaplaceEquation\LaplaceEquation.Editor\obj\x64\Release\LaplaceEquation.Editor.csprojResolveAssemblyReference.cache
