@@ -43,8 +43,10 @@ namespace LaplaceEquation
             lock (CudafyMulti.Semaphore)
             {
                 CudafyMulti.SetArray(sizes, lengths, workspace);
-                queue.Enqueue(CudafyMulti.ExecuteLaplaceSolver(epsilon, a, relax, GridSize, BlockSize,
-                    AppendLineCallback));
+                queue.Enqueue(CudafyMulti.ExecuteLaplaceSolver(
+                    epsilon, a, relax,
+                    GridSize, BlockSize,
+                    this));
                 workspace = CudafyMulti.GetArray();
             }
             // Копируем рабочую область в итоговый массив

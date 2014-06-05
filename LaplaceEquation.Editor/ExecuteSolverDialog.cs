@@ -66,6 +66,8 @@ namespace LaplaceEquation.Editor
             }
         }
 
+        public BuildChooseDialog MpiBuildChooseDialog { get; set; }
+
         private void ValueChanged(object sender, EventArgs e)
         {
             try

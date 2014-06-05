@@ -14,3 +14,4 @@ D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo.Properties.Resou
 D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo.csproj.GenerateResource.Cache
 D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo.exe
 D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo.pdb
+D:\Projects\LaplaceEquation\SurfaceDemo\obj\Release\SurfaceDemo.csprojResolveAssemblyReference.cache

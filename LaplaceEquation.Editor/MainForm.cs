@@ -13,11 +13,14 @@ namespace LaplaceEquation.Editor
     public partial class MainForm : Form
     {
         private static readonly BuildChooseDialog CudaBuildChooseDialog =
-            new BuildChooseDialog(typeof (MyCudaFormula));
+            new BuildChooseDialog(typeof(MyCudaFormula));
+        private static readonly BuildChooseDialog MpiBuildChooseDialog =
+            new BuildChooseDialog(typeof(MyMpiFormula));
 
         private static readonly ExecuteSolverDialog ExecuteSolverDialog = new ExecuteSolverDialog
         {
-            CudaBuildChooseDialog = CudaBuildChooseDialog
+            CudaBuildChooseDialog = CudaBuildChooseDialog,
+            MpiBuildChooseDialog = MpiBuildChooseDialog,
         };
 
         private static readonly RandomDialog RandomDailog = new RandomDialog();
