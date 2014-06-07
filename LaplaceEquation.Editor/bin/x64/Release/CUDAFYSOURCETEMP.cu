@@ -64,8 +64,8 @@ extern "C" __global__ void LaplaceSolver( double* prev, int prevLen0,  double* n
 			num7 += (prev[(num3 - extV[(k)])] + prev[(num3 + extV[(k)])]) * w[(k)];
 		}
 		next[(num3)] = num7;
-		double num8 = num6 * (num6 - num7);
-		double num9 = num7;
+		double num8 = num6 - num7;
+		double num9 = num6 + num7;
 		num8 *= num8;
 		num9 *= num9;
 		num += num8;
@@ -102,8 +102,8 @@ extern "C" __global__ void LaplaceSolverWithRelax( double* array, int arrayLen0,
 				num8 += (array[(num3 - extV[(k)])] + array[(num3 + extV[(k)])]) * w[(k)];
 			}
 			array[(num3)] = num8;
-			double num9 = num7 * (num7 - num8);
-			double num10 = num8;
+			double num9 = num7 - num8;
+			double num10 = num7 + num8;
 			num9 *= num9;
 			num10 *= num10;
 			num += num9;

@@ -4,7 +4,7 @@
 	// nvopencc 4.1 built on 2013-07-10
 
 	//-----------------------------------------------------------
-	// Compiling X:/Temp/tmpxft_00001544_00000000-15_CUDAFYSOURCETEMP.cpp3.i (X:/Temp/ccBI#.a07132)
+	// Compiling X:/Temp/tmpxft_00001ffc_00000000-15_CUDAFYSOURCETEMP.cpp3.i (X:/Temp/ccBI#.a08984)
 	//-----------------------------------------------------------
 
 	//-----------------------------------------------------------
@@ -16,7 +16,7 @@
 	//  -m2	(Report advisories)
 	//-----------------------------------------------------------
 
-	.file	1	"X:/Temp/tmpxft_00001544_00000000-14_CUDAFYSOURCETEMP.cudafe2.gpu"
+	.file	1	"X:/Temp/tmpxft_00001ffc_00000000-14_CUDAFYSOURCETEMP.cudafe2.gpu"
 	.file	2	"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin/../../VC/INCLUDE\crtdefs.h"
 	.file	3	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\crt/device_runtime.h"
 	.file	4	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\host_defines.h"
@@ -188,10 +188,10 @@ $Lt_0_5122:
 	st.global.f64 	[%rd23+0], %fd5;
 	.loc	15	71	0
 	sub.f64 	%fd10, %fd3, %fd5;
-	mul.f64 	%fd11, %fd3, %fd10;
-	mad.rn.f64 	%fd2, %fd11, %fd11, %fd2;
+	mad.rn.f64 	%fd2, %fd10, %fd10, %fd2;
 	.loc	15	72	0
-	mad.rn.f64 	%fd1, %fd5, %fd5, %fd1;
+	add.f64 	%fd11, %fd3, %fd5;
+	mad.rn.f64 	%fd1, %fd11, %fd11, %fd1;
 	.loc	15	48	0
 	add.u32 	%r4, %r4, %r8;
 	ld.global.s32 	%r27, [%rd4+0];
@@ -369,10 +369,10 @@ $Lt_1_6402:
 	st.global.f64 	[%rd16+0], %fd5;
 	.loc	15	109	0
 	sub.f64 	%fd10, %fd3, %fd5;
-	mul.f64 	%fd11, %fd3, %fd10;
-	mad.rn.f64 	%fd1, %fd11, %fd11, %fd1;
+	mad.rn.f64 	%fd1, %fd10, %fd10, %fd1;
 	.loc	15	110	0
-	mad.rn.f64 	%fd2, %fd5, %fd5, %fd2;
+	add.f64 	%fd11, %fd3, %fd5;
+	mad.rn.f64 	%fd2, %fd11, %fd11, %fd2;
 	ld.global.s32 	%r6, [%rd10+0];
 $Lt_1_5890:
 	.loc	15	82	0
